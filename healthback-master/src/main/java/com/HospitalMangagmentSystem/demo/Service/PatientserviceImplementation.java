@@ -1,17 +1,15 @@
 package com.HospitalMangagmentSystem.demo.Service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.HospitalMangagmentSystem.demo.Exception.DataNotFoundException;
+import com.HospitalMangagmentSystem.demo.constants.MedicalUtil;
+import com.HospitalMangagmentSystem.demo.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.HospitalMangagmentSystem.demo.Dto.PatientDto;
-import com.HospitalMangagmentSystem.demo.domain.Address;
-import com.HospitalMangagmentSystem.demo.domain.Patients;
-import com.HospitalMangagmentSystem.demo.domain.Publicorprivateinsurance;
-import com.HospitalMangagmentSystem.demo.domain.Refcalendar;
-import com.HospitalMangagmentSystem.demo.domain.Refdiseases;
 import com.HospitalMangagmentSystem.demo.repository.PatientRepository;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import javax.transaction.Transactional;
@@ -51,6 +49,25 @@ public class PatientserviceImplementation implements PatientService {
 		Address address = new Address();
 		address.setAddress_detail(patientDto.getAddress());
 		patient.addPatientAddress(address);
+
+		return patient;
+	}
+	@Override
+	public Patients checkInPateint(int id) {
+		Patients patient = patrep.findById(id).orElse(null);
+
+		DoctorsVisit encounter = new DoctorsVisit();
+		encounter.setCheckInDateTime(new Date());
+		encounter.setPatient(patient);
+		encounter.setStatus(MedicalUtil.ENCOUNTER_STATUS_OPEN);
+
+		//User employee = patrep.findById(1).orElse(null); // need to be fixed
+		//encounter.setEmployee(employee);
+
+		//encounterRepo.save(encounter);
+
+		patient.addEncounter(encounter);
+		patient = patrep.save(patient);
 
 		return patient;
 	}

@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 @JsonDeserialize
 public interface PatientService {
 	List<Patients> getallpatient();
-	   
+	Patients checkInPateint(int id);
 	Patients getonepatient(int id);
 	   
 	Patients createpatient(PatientDto pati);

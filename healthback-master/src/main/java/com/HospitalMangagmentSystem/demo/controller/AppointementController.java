@@ -5,6 +5,7 @@ import com.HospitalMangagmentSystem.demo.Dto.PatientDto;
 import com.HospitalMangagmentSystem.demo.Service.AppointementService;
 import com.HospitalMangagmentSystem.demo.domain.Appointement;
 import com.HospitalMangagmentSystem.demo.domain.Patients;
+import com.HospitalMangagmentSystem.demo.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ public class AppointementController {
     @PostMapping("/appointement/")
     @Transactional
     public ResponseEntity<Object> createappointement(@RequestBody AppointementDto appdto) {
-        Appointement appsave =this.appsrvice.createAppointement(appdto);
+        User appsave =this.appsrvice.createAppointement(appdto);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")

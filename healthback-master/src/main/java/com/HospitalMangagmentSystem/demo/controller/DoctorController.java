@@ -21,7 +21,7 @@ import com.HospitalMangagmentSystem.demo.repository.Doctorrepository;
 @RestController
 public class DoctorController {
 
-	@Autowired
+	/**@Autowired
 	DoctorService docservice;
 	
 	@GetMapping("/Doctor")
@@ -65,6 +65,6 @@ public class DoctorController {
 		
 		return this.docservice.ubdatedoctor(doc, id);
 		
-	}
+	}*/
 
 }

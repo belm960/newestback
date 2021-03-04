@@ -8,37 +8,39 @@ import java.sql.Time;
 import java.util.Date;
 
 public class AppointementDto {
-    private String Firstname;
-    private String Lastname;
-    private String Gender;
+    private String firstname;
+    private String lastname;
+    private String gender;
     private int mobile;
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss.SSS")
     //@JsonFormat(pattern = "MM/dd/yyyy", timezone = "America/New_York")
     private Date dob;
-
+    private String doctorsname;
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss.SSS")
     //@JsonFormat(pattern = "MM/dd/yyyy", timezone = "America/New_York")
-    private Date dateofappointment;
+    private Date doa;
 
-    private Time timeofappointment;
+    private String toa;
     private String email;
+    private String injury;
+    private String note;
 
     public String getEmail() {
         return email;
     }
 
-    public String getFirstname() {
-        return Firstname;
+    public String getfirstname() {
+        return firstname;
     }
 
-    public String getLastname() {
-        return Lastname;
+    public String getlastname() {
+        return lastname;
     }
 
     public String getGender() {
-        return Gender;
+        return gender;
     }
 
     public int getMobile() {
@@ -49,11 +51,25 @@ public class AppointementDto {
         return dob;
     }
 
-    public Date getDateofappointment() {
-        return dateofappointment;
+
+
+    public String getDoctorsname() {
+        return doctorsname;
     }
 
-    public Time getTimeofappointment() {
-        return timeofappointment;
+    public String getInjury() {
+        return injury;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public String getToa() {
+        return toa;
+    }
+
+    public Date getDoa() {
+        return doa;
     }
 }

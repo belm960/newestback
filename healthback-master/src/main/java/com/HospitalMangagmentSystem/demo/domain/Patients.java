@@ -62,8 +62,8 @@ public class Patients extends AuditModel {
 
 	@OneToMany(mappedBy="patient",cascade = CascadeType.ALL)
 //	@JsonBackReference 
-//	@JsonIgnore
-	 private Set<DoctorsVisit> doctors_visits;
+	@JsonIgnore
+	 private Set<DoctorsVisit> doctorsVisits;
 	
 	
 	@ManyToOne(cascade = CascadeType.ALL)
@@ -149,13 +149,7 @@ public class Patients extends AuditModel {
 		this.patienttreatment = patienttreatment;
 	}
 
-	public Set<DoctorsVisit> getDoctors_visits() {
-		return doctors_visits;
-	}
 
-	public void setDoctors_visits(Set<DoctorsVisit> doctors_visits) {
-		this.doctors_visits = doctors_visits;
-	}
 
 	
 
@@ -297,5 +291,22 @@ public class Patients extends AuditModel {
 
 	public void setLaboratory(Set<Laboratory> laboratory) {
 		this.laboratory = laboratory;
+	}
+
+	public Set<DoctorsVisit> getDoctorsVisits() {
+		return doctorsVisits;
+	}
+
+	public void setDoctorsVisits(Set<DoctorsVisit> doctorsVisits) {
+		this.doctorsVisits = doctorsVisits;
+	}
+	public DoctorsVisit addEncounter(DoctorsVisit encounter) {
+		if(doctorsVisits == null) {
+			doctorsVisits = new HashSet<DoctorsVisit>();
+		}
+		getDoctorsVisits().add(encounter);
+		encounter.setPatient(this);
+
+		return encounter;
 	}
 }

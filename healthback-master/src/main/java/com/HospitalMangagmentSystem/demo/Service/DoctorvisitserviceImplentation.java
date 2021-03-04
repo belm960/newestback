@@ -2,7 +2,10 @@ package com.HospitalMangagmentSystem.demo.Service;
 
 import java.util.List;
 
+import com.HospitalMangagmentSystem.demo.Dto.VisitBasic;
+import com.HospitalMangagmentSystem.demo.Dto.VisitNote;
 import com.HospitalMangagmentSystem.demo.Exception.DataNotFoundException;
+import com.HospitalMangagmentSystem.demo.constants.MedicalUtil;
 import com.HospitalMangagmentSystem.demo.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,65 +16,66 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 @Component
 @JsonDeserialize 
 public class DoctorvisitserviceImplentation implements DoctorvisitService {
-       @Autowired
-       DoctorVisitRepository dovisitrep;
+	@Autowired
+	DoctorVisitRepository encounterRepo;
+
 	@Override
-	public List<DoctorsVisit> getallcity() {
-		// TODO Auto-generated method stub
-		return dovisitrep.findAll();
+	public List<DoctorsVisit> getCheckedInPatients() {
+		return encounterRepo.findByStatusNot(MedicalUtil.ENCOUNTER_STATUS_COMPLETED);
+	}
+
+
+
+	@Override
+	public void dischargePateint(int id) {
+		DoctorsVisit encounter = encounterRepo.findById(id).orElse(null);
+		if(encounter != null) {
+			encounter.setStatus(MedicalUtil.ENCOUNTER_STATUS_COMPLETED);
+			encounterRepo.save(encounter);
+		}
+
 	}
 
 	@Override
-	public DoctorsVisit getonedoctorvisit(int id) {
-		// TODO Auto-generated method stub
-		DoctorsVisit docvi=dovisitrep.findById(id).orElseThrow(()->
-				new DataNotFoundException("doctor visit with id " + id + " not found") );
-		return docvi ;
+	public DoctorsVisit getEncounterBy(int id) {
+		return encounterRepo.findById(id).orElse(null);
+	}
+
+
+
+
+
+	@Override
+	public DoctorsVisit addEncounterBasic(VisitBasic encounter, int id) {
+		//Optional<Visit> enc = Optional.ofNullable(encounterRepo.findByEncounterid(id));
+		//Visit visit = enc.get();
+		// System.out.println(visit.getPulse());
+		DoctorsVisit enc =  encounterRepo.findById(id).orElse(null);
+
+		// Optional<Iterable<Visit>> vehicle = this,encounterRepo.findById(id);
+		//Visit enc =encounterRepo.findById(id).orElseThrow(()->
+		//  new DataNotFoundException("patient with id " + id + " not found") )
+
+		enc.setStatus(MedicalUtil.ENCOUNTER_STATUS_IN_PROGRESS);
+		enc.setPulse(encounter.getPulse());
+		enc.setTemp(encounter.getTemp());
+		enc.setSat(encounter.getSat());
+		//enc.setRespRate(encounter.getRespRate());
+		enc.setWeight(encounter.getWeight());
+
+
+		enc.setPulse(encounter.getPulse());
+		return encounterRepo.save(enc);
 	}
 
 	@Override
-	public DoctorsVisit createdoctorvisit(DoctorvisitDto docvd) {
-		// TODO Auto-generated method stub
-		DoctorsVisit dv = new DoctorsVisit();
-		dv.setVisit_Details(docvd.getVisitdetails());
-		dv.setAge(docvd.getAge());
-		dv.setServicedate(docvd.getServicedate());
-		dv.setNextservicedate(docvd.getNextservicedate());
-		dv.setPatient(dv.getPatient());
-		dv.setUser(dv.getUser());
+	public DoctorsVisit addEncounterNote(VisitNote note, int id) {
+		DoctorsVisit enc =  encounterRepo.findById(id).orElse(null);
+		enc.setRemark(note.getRemark());
+		enc.setTreatment(note.getTreatment());
+		enc.setChiefComplaint(note.getChiefComplaint());
+		return  encounterRepo.save(enc);
 
-
-
-
-		Patients pp = new Patients();
-		// pp.setDateOfbirth(docvd.getDateofbirth());
-		//pp.setOther_Details(docvd.getOtherdetails());
-
-              
-		dv.setPatient(pp);
-              
-		Refcalendar rfcal = new Refcalendar();
-		rfcal.setDay_Date_Time(docvd.getDaydatetime());
-		rfcal.setDay_Number(docvd.getDaynumber());
-		dv.setRefCalender(rfcal);
-            
-		return dovisitrep.save(dv) ;
-	}
-
-	@Override
-	public void deletedoctorvisit(int id) {
-		// TODO Auto-generated method stub
-		dovisitrep.deleteById(id);
-	}
-
-	@Override
-	public DoctorsVisit ubdatedoctorvisit(DoctorvisitDto docvd, int id) {
-		// TODO Auto-generated method stub
-		DoctorsVisit docv=dovisitrep.findById(id).orElseThrow(()->
-				new DataNotFoundException("doctor visit with id " + id + " not found") );
-		
-		docv.setVisit_Details(docvd.getVisitdetails());
-		return docv;
 	}
 
 }

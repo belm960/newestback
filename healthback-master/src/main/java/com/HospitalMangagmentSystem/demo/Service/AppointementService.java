@@ -4,6 +4,7 @@ import com.HospitalMangagmentSystem.demo.Dto.AddressDto;
 import com.HospitalMangagmentSystem.demo.Dto.AppointementDto;
 import com.HospitalMangagmentSystem.demo.domain.Address;
 import com.HospitalMangagmentSystem.demo.domain.Appointement;
+import com.HospitalMangagmentSystem.demo.domain.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public interface AppointementService {
 
     // Appointement getoneApointment(int id);
 
-    Appointement createAppointement(AppointementDto appd);
+    User createAppointement(AppointementDto appd);
 
     void deleteAppointement(int id);
 

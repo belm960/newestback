@@ -37,6 +37,10 @@ import com.HospitalMangagmentSystem.demo.repository.Refdiseasesrepository;
 		
 			return this.patiservice.getallpatient();
 		}
+		@GetMapping("/checkIn/{id}")
+		public Patients checkInPateint(@PathVariable int id){
+			return patiservice.checkInPateint(id);
+		}
 		
 		@PostMapping("/Patient/")
 		@Transactional

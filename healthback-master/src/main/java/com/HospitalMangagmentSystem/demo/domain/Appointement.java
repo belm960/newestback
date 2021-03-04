@@ -1,8 +1,8 @@
 package com.HospitalMangagmentSystem.demo.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
@@ -12,7 +12,6 @@ import java.sql.Time;
 import java.util.Date;
 
 @Entity
-@Table(name="Appointment")
 public class Appointement extends AuditModel {
 
     @Id
@@ -38,21 +37,18 @@ public class Appointement extends AuditModel {
     //@JsonFormat(pattern = "MM/dd/yyyy", timezone = "America/New_York")
     private Date dateofappointment;
 
-    private Time timeofappointment;
+    private String timeofappointment;
+    private String injury;
+    private String notes;
 
     @ManyToOne (cascade = CascadeType.ALL)
-    @JoinColumn(name="User_Id")
-    //@JsonManagedReference
+    @JoinColumn(name="appointement_id")
+    @JsonManagedReference
     @JsonIgnore
-    private User user;
+    private User doctor;
 
-    @ManyToOne (cascade = CascadeType.ALL)
-    @JoinColumn(name="Patient_ID")
-    //@JsonManagedReference
-    @JsonIgnore
+    @OneToOne
     private Patients patient;
-
-
 
     public int getId() {
         return id;
@@ -118,21 +114,9 @@ public class Appointement extends AuditModel {
         this.dateofappointment = dateofappointment;
     }
 
-    public Time getTimeofappointment() {
-        return timeofappointment;
-    }
 
-    public void setTimeofappointment(Time timeofappointment) {
-        this.timeofappointment = timeofappointment;
-    }
 
-    public User getUser() {
-        return user;
-    }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     public Patients getPatient() {
         return patient;
@@ -142,5 +126,35 @@ public class Appointement extends AuditModel {
         this.patient = patient;
     }
 
+    public User getDoctor() {
+        return doctor;
+    }
 
+    public void setDoctor(User doctor) {
+        this.doctor = doctor;
+    }
+
+    public String getTimeofappointment() {
+        return timeofappointment;
+    }
+
+    public void setTimeofappointment(String timeofappointment) {
+        this.timeofappointment = timeofappointment;
+    }
+
+    public String getInjury() {
+        return injury;
+    }
+
+    public void setInjury(String injury) {
+        this.injury = injury;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
 }

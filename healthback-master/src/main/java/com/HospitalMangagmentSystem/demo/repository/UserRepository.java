@@ -11,7 +11,7 @@ import java.util.Set;
 public interface UserRepository extends JpaRepository<User, Integer> {
     Optional<User> findByUsername(String username);
 
-
+    User findByLastAndFirst(String lastName,String firstname);
     List<User> findUserByRoles(Role roles);
 
     Boolean existsByUsername(String username);
