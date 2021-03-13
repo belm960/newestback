@@ -91,12 +91,10 @@ public class DoctorsVisit extends AuditModel {
 	//@JsonManagedReference
 	private Refcalendar refCalender;
 
-	//bi-directional many-to-one association to Doctor
-	@ManyToOne(fetch=FetchType.LAZY,  cascade = CascadeType.ALL)
-	@JoinColumn(name="User_ID")
-	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
-	//@JsonIgnore
-	private User user;
+	@OneToOne
+	@JoinColumn(name = "DOCTOR_ID", referencedColumnName = "id")
+	@JsonManagedReference
+	private User doctor;
 
 	@ManyToOne
 	@JoinColumn(name = "PATIENT_ID", referencedColumnName = "Patient_ID")
@@ -169,13 +167,7 @@ public class DoctorsVisit extends AuditModel {
 		Nextservicedate = nextservicedate;
 	}
 
-	public User getUser() {
-		return user;
-	}
 
-	public void setUser(User user) {
-		this.user = user;
-	}
 
 	public int getVisitid() {
 		return visitid;
@@ -327,5 +319,14 @@ public class DoctorsVisit extends AuditModel {
 
 	public void setWeight(String weight) {
 		this.weight = weight;
+	}
+
+
+	public User getDoctor() {
+		return doctor;
+	}
+
+	public void setDoctor(User doctor) {
+		this.doctor = doctor;
 	}
 }

@@ -42,7 +42,7 @@ public class Appointement extends AuditModel {
     private String notes;
 
     @ManyToOne (cascade = CascadeType.ALL)
-    @JoinColumn(name="appointement_id")
+    @JoinColumn(name="User_id")
     @JsonManagedReference
     @JsonIgnore
     private User doctor;

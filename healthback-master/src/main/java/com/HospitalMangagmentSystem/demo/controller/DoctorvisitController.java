@@ -6,6 +6,7 @@ import java.util.List;
 
 	import com.HospitalMangagmentSystem.demo.Dto.VisitBasic;
 	import com.HospitalMangagmentSystem.demo.Dto.VisitNote;
+	import com.HospitalMangagmentSystem.demo.domain.User;
 	import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 	import org.springframework.transaction.annotation.Transactional;
@@ -56,6 +57,11 @@ import com.HospitalMangagmentSystem.demo.domain.DoctorsVisit;
 		DoctorsVisit addEncounterBasic(@RequestBody VisitBasic encounter, @PathVariable int id) {
 			return service.addEncounterBasic(encounter,id);
 			//return service.getEncounterBy(Integer.parseInt(encounter.getEncounterId()));
+		}
+		@PostMapping("/doctorvisit/{id}")
+		@org.springframework.transaction.annotation.Transactional
+		User addDoctorToAvisit(@RequestBody DoctorDto doc, @PathVariable int id){
+			return service.addDoctorInAvisit(doc,id);
 		}
 
 		@PostMapping("/notes/{id}")

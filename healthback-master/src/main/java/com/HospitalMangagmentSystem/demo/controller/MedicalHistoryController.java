@@ -32,12 +32,12 @@ public class MedicalHistoryController {
     }
 
 
-    @PostMapping("/MedicalHistory/")
+    @PostMapping("/MedicalHistory/{id}")
     @Transactional
-    public ResponseEntity<Object> createmedicalhistory(@RequestBody MedicalHistoryDto mhdto) {
+    public ResponseEntity<Object> createmedicalhistory(@RequestBody MedicalHistoryDto mhdto,@PathVariable int id) {
 
 
-        MedicalHistory mhis = this.medicalHistoryService.createmedicalhistory(mhdto);
+        MedicalHistory mhis = this.medicalHistoryService.createmedicalhistory(mhdto,id);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")

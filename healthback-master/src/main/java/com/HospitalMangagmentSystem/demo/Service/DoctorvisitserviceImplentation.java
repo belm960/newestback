@@ -2,23 +2,28 @@ package com.HospitalMangagmentSystem.demo.Service;
 
 import java.util.List;
 
+import com.HospitalMangagmentSystem.demo.Dto.DoctorDto;
 import com.HospitalMangagmentSystem.demo.Dto.VisitBasic;
 import com.HospitalMangagmentSystem.demo.Dto.VisitNote;
 import com.HospitalMangagmentSystem.demo.Exception.DataNotFoundException;
 import com.HospitalMangagmentSystem.demo.constants.MedicalUtil;
 import com.HospitalMangagmentSystem.demo.domain.*;
+import com.HospitalMangagmentSystem.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.HospitalMangagmentSystem.demo.Dto.DoctorvisitDto;
 import com.HospitalMangagmentSystem.demo.repository.DoctorVisitRepository;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import org.springframework.transaction.annotation.Transactional;
+
 @Component
 @JsonDeserialize 
 public class DoctorvisitserviceImplentation implements DoctorvisitService {
 	@Autowired
 	DoctorVisitRepository encounterRepo;
-
+    @Autowired
+	UserRepository userrepo;
 	@Override
 	public List<DoctorsVisit> getCheckedInPatients() {
 		return encounterRepo.findByStatusNot(MedicalUtil.ENCOUNTER_STATUS_COMPLETED);
@@ -33,6 +38,32 @@ public class DoctorvisitserviceImplentation implements DoctorvisitService {
 			encounter.setStatus(MedicalUtil.ENCOUNTER_STATUS_COMPLETED);
 			encounterRepo.save(encounter);
 		}
+
+	}
+
+	@Override
+	@Transactional
+	public User addDoctorInAvisit(DoctorDto doc, int id) {
+
+		String doctorsname = doc.getDoctorsname();
+		System.out.println(doctorsname);
+		String delims = "[ ]+";
+		String[] tokens = doctorsname.split(delims);
+		String firstName = tokens[0];
+		String lastName = tokens[1];
+		System.out.println(lastName);
+		System.out.println(firstName);
+		User user = userrepo.findByLastAndFirst(lastName,firstName);
+
+
+		DoctorsVisit visit  = encounterRepo.findById(id).orElse(null);
+		System.out.println(visit.getStatus());
+		user.addDoctor(visit);
+		System.out.println(user.getEncounter().getStatus());
+		    // user.setEncounter(visit);
+		// add the appointment into the doctor
+		return userrepo.save(user);
+
 
 	}
 

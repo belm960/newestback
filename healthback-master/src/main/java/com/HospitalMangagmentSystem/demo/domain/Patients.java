@@ -104,6 +104,10 @@ public class Patients extends AuditModel {
 	@JsonIgnore
 	//@JsonManagedReference
 	private Set<Radiology> radiology;
+	// bi-directional many-to-one association to Encounter
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "patient")
+	@JsonIgnore
+	private Set<MedicalHistory> medicalhistory;
 
 	@OneToMany(mappedBy="patient",  cascade = CascadeType.ALL)
 	@JsonIgnore
@@ -273,13 +277,7 @@ public class Patients extends AuditModel {
 		this.radiology = radiology;
 	}
 
-	public Set<MedicalHistory> getMedicalHistory() {
-		return medicalHistory;
-	}
 
-	public void setMedicalHistory(Set<MedicalHistory> medicalHistory) {
-		this.medicalHistory = medicalHistory;
-	}
 
 	public void setAppointment(Set<Appointement> appointment) {
 		this.appointment = appointment;
@@ -308,5 +306,35 @@ public class Patients extends AuditModel {
 		encounter.setPatient(this);
 
 		return encounter;
+	}
+
+	public MedicalHistory addMedicalHistory(MedicalHistory history) {
+		if(medicalhistory == null) {
+			medicalhistory = new HashSet<MedicalHistory>();
+		}
+		getMedicalhistory().add(history);
+		history.setPatient(this);
+
+		return history;
+	}
+
+	public Set<MedicalHistory> getMedicalhistory() {
+		return medicalhistory;
+	}
+
+	public void setMedicalhistory(Set<MedicalHistory> medicalhistory) {
+		this.medicalhistory = medicalhistory;
+	}
+
+	public Set<MedicalHistory> getMedicalHistory() {
+		return medicalHistory;
+	}
+
+	public void setMedicalHistory(Set<MedicalHistory> medicalHistory) {
+		this.medicalHistory = medicalHistory;
+	}
+
+	public Set<Appointement> getAppointment() {
+		return appointment;
 	}
 }

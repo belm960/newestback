@@ -12,7 +12,7 @@ public interface MedicalHistoryService {
 
     MedicalHistory getonemedicalhistory(int id);
 
-    MedicalHistory createmedicalhistory(MedicalHistoryDto mhdto);
+    MedicalHistory createmedicalhistory(MedicalHistoryDto mhdto,int id);
 
     void deletemedicalhistory(int id);
 

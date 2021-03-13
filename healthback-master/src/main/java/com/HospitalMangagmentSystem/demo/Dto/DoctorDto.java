@@ -1,26 +1,11 @@
 package com.HospitalMangagmentSystem.demo.Dto;
 
 public class DoctorDto {
-	private String doctordetails;
-	private String name ;
+	private String doctorsname;
 
-	private String department;
-    
-	private String addressdetail;
-	
-	public String getDoctordetails() {
-		return doctordetails;
-	}
-	
-	public String getAddressdetail() {
-		return addressdetail;
+	public String getDoctorsname() {
+		return doctorsname;
 	}
 
-	public String getName() {
-		return name;
-	}
 
-	public String getDepartment() {
-		return department;
-	}
 }
