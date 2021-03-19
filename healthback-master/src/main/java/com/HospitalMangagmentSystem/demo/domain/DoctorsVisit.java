@@ -91,7 +91,7 @@ public class DoctorsVisit extends AuditModel {
 	//@JsonManagedReference
 	private Refcalendar refCalender;
 
-	@OneToOne
+	@ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "DOCTOR_ID", referencedColumnName = "id")
 	@JsonManagedReference
 	private User doctor;

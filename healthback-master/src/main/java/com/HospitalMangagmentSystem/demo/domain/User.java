@@ -70,9 +70,10 @@ public class User {
     @JsonIgnore
     private Set<Appointement> appointements;
     //bi-directional one-to-one association to Encounter
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY,mappedBy="doctor",  cascade = CascadeType.ALL)
+    //@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JsonBackReference
-    private DoctorsVisit encounter;
+    private Set<DoctorsVisit> encounter;
 
     @NaturalId
     @NotBlank
@@ -248,20 +249,23 @@ public class User {
     }
 
 
-    public DoctorsVisit getEncounter() {
-        return encounter;
-    }
 
-    public void setEncounter(DoctorsVisit encounter) {
-        this.encounter = encounter;
-    }
     public DoctorsVisit addDoctor(DoctorsVisit appointement) {
         if (encounter == null) {
-            encounter = new DoctorsVisit();
+            encounter = new HashSet<DoctorsVisit>();
         }
-        getEncounter().setDoctor(this);
+        getEncounter().add(appointement);
+        appointement.setDoctor(this);
 
 
         return appointement;
+    }
+
+    public Set<DoctorsVisit> getEncounter() {
+        return encounter;
+    }
+
+    public void setEncounter(Set<DoctorsVisit> encounter) {
+        this.encounter = encounter;
     }
 }

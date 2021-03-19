@@ -59,7 +59,7 @@ public class DoctorvisitserviceImplentation implements DoctorvisitService {
 		DoctorsVisit visit  = encounterRepo.findById(id).orElse(null);
 		System.out.println(visit.getStatus());
 		user.addDoctor(visit);
-		System.out.println(user.getEncounter().getStatus());
+
 		    // user.setEncounter(visit);
 		// add the appointment into the doctor
 		return userrepo.save(user);
